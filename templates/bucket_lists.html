@@ -1,0 +1,344 @@
+{% extends "styling.html"%}
+{%block head%}
+<!DOCTYPE html>
+<html lang="en">
+	<title>BUCKETLIST</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" type="image/png" href="{{url_for('static', filename='login/images/icons/favicon.ico')}}"/>
+
+    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
+    
+    <script src="{{url_for('static', filename='js/app.js') }}" defer></script>
+    
+    <link href="{{url_for('static', filename='register_form_css.css')}}" rel="stylesheet">
+    
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/css/main.css')}}">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 50%;
+  position: relative;
+  display: flex;
+}
+table tr td button:hover {
+  background-color: #94b4ec !important;
+  color: rgb(181, 37, 37) !important;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 15px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: blue;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 90%;
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px;
+}
+
+.pagination-range {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.pagination-total {
+  margin-left: 10px;
+  color: #888;
+}
+
+.pagination-button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 3px;
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: bold;
+}
+
+.pagination-button:hover {
+  background-color: #ccc;
+}
+
+
+/* CSS */
+/* CSS */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  background-color: #f0f0f0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input[type="text"] {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-bar button {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 0 5px 5px 0;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-range {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.pagination-divider {
+  margin: 0 5px;
+  color: #888;
+}
+
+.pagination-total {
+  margin-left: 5px;
+  color: #888;
+}
+
+.pagination-button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 3px;
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: bold;
+}
+
+.pagination-button:hover {
+  background-color: #ccc;
+}
+
+.create-button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Style the container to limit the width and prevent overflow */
+.table-container {
+  width: 90%;
+  overflow-x: auto; /* If the table content is wider than the container, add horizontal scroll */
+  margin: 0 auto !important; /* Center the table within the container */
+}
+
+.table-container table {
+  width: 100% !important; /* Take up 100% of the .table-container's width */
+  /* Add any other styling for your table, such as borders, font styles, etc. */
+}
+
+
+    </style>
+
+
+</head>
+
+
+    <body class="bg-light">
+        {% endblock %}
+        {%block content%}
+      
+      
+  
+
+  
+       
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
+      <div class="col text-center">
+                        </div>
+      <div class="navbar-brand text-light display-2">WELCOME,ejidio
+    </div>
+    
+      <a href="http://127.0.0.1:8000/logout" class=" btn btn-outline-light btn-lg m-2 text-capitalize">logout</a>
+    </nav>
+    
+    <div class=""></div>
+    
+     
+         
+          <div class="col-md-12 col-md-100 pr-2 pt-1 pl-2 ">
+            <div class="container">
+                <button class="create-button">Create</button>
+                <div class="search-bar">
+                  <input type="text" placeholder="Search...">
+                  <button class="search-button">Search</button>
+                </div>
+                
+                <div class="pagination">
+                  <span class="pagination-range">1-20</span>
+                  <span class="pagination-divider">/</span>
+                  <span class="pagination-total">28</span>
+                  <button class="pagination-button prev-page-button">&#60;</button>
+                  <button class="pagination-button next-page-button">&#62;</button>
+                </div>
+                
+
+                
+              </div>
+              
+              <div class="table-container pt-2">
+                <table class=" table-hover table-bordered bg-light p-2">
+        
+                    <tr>
+                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
+                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                  
+                  </tr>
+    
+                  <tr>
+                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
+                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                    
+                    </tr>
+                    <tr>
+                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
+                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                        
+                        </tr>
+                        <tr>
+                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
+                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                            
+                            </tr>
+                            <tr>
+                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
+                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                                
+                                </tr>
+                           
+                               
+                        
+                    
+                       
+                   
+                  
+                  
+                      
+                 
+        
+                </table>
+             
+              </div>
+        
+          </div>
+        </div>
+        {%endblock content%}
+
+
+
+
+
+
+
+      
+            
+        
+       
+        
+
+        
+
+      
+
+
+
+
+
+
+    
+    
+  
+    

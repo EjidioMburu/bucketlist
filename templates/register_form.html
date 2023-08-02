@@ -1,0 +1,200 @@
+{% extends "styling.html"%}
+{%block head%}
+<!DOCTYPE html>
+<html lang="en">
+	<title>BUCKETLIST</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="icon" type="image/png" href="{{url_for('static', filename='login/images/icons/favicon.ico')}}"/>
+
+    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
+    
+    <script src="{{url_for('static', filename='js/app.js') }}" defer></script>
+    
+    <link href="{{url_for('static', filename='register_form_css.css')}}" rel="stylesheet">
+    
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/css/main.css')}}">
+    <style>
+.register{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin: 0%;
+    padding-left:0px;
+    height:555px;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    margin-left:8%;
+    
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: left;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    margin-left: 8%;
+    color: #495057;
+}
+
+
+    </style>
+</head>
+<body>
+
+
+{% endblock head %}
+	{%block content%}
+
+    <form class="" action="" method="post" enctype="multipart/form-data">
+        
+    
+    
+    <div class="container-fluid register">
+                    <div class="row">
+                        <div class="col-md-3 register-left">
+                            <img src="" alt=""/>
+                            <h3>Welcome</h3>
+    
+                        </div>
+                        <div class="col-md-9 register-right">
+                            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">REGISTER</a>
+                                </li>
+                                <li class="nav-item">
+    
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <h3 class="register-heading">Account Creation Form</h3>
+                                    <div class="row register-form">
+                                        <div class="col-md-6">
+    
+    
+                                          
+    
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="name" placeholder="Username" name="name" required />
+                                            </div>
+                                                                           <div class="form-group">
+                                                <input type="password" name="password" id="password" class="form-control" placeholder="Password"   required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" id="password" class="form-control" placeholder=" Confirm Password"   required/>
+                                            </div>
+    
+                                            
+                                            <div class="container-login100-form-btn">
+                                                <input type="submit" value="register" class="login100-form-btn bg-primary" name="Register"/>
+                                                   
+                                            </div>
+                                            <!-- <input type="submit" class="btnRegister form-control" id="butsave" name="register"  value="Register"/> -->
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            
+    <!--end of table-->
+    
+          </div>
+        </div>
+            </form>
+            {%endblock content%}
