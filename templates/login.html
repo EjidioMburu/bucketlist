@@ -1,13 +1,23 @@
 {% extends "styling.html"%}
+
 	{%block content%}
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="{{ url_for('login_route') }}" method="POST" enctype="multipart/form-data">
+					
 					<span class="login100-form-title bg-primary">
 						LOGIN HERE
 					</span>
-
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					  <div class=flashes>
+					  {% for message in messages%}
+						<p> <font color="red">{{ message}}</font></p>
+					  {% endfor %}
+					  </div>
+					{% endif %}
+				  {% endwith %}
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>
@@ -31,11 +41,13 @@
 					<div class="container-login100-form-btn m-b-16">
 						<button class="login100-form-btn bg-primary" name="login">
 							Login
+ 
+
 						</button>
 					</div>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn bg-" name="Register">
-							Register
+							<a href="http://127.0.0.1:5000/auth/register"><font color="blue">	Register </font></a>
 						</button>
 					</div>
 
@@ -46,5 +58,7 @@
 			</div>
 		</div>
 	</div>
+	
+    
 	{% endblock %}
 	

@@ -8,13 +8,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="icon" type="image/png" href="{{url_for('static', filename='login/images/icons/favicon.ico')}}"/>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
     <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
     
-    <script src="{{url_for('static', filename='js/app.js') }}" defer></script>
     
-    
-    
+    <script src="{{url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='sweetalert2/dist/sweetalert2.min.css') }}">
+
+<!-- Include SweetAlert JS -->
+<script src="{{ url_for('static', filename='sweetalert2/dist/sweetalert2.min.js') }}"></script>
+
+    <!-- Include SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+ 
 
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login/vendor/bootstrap/css/bootstrap.min.css')}}">
@@ -64,6 +71,11 @@
   
   
   <script src="{{url_for('static', filename='login/js/main.js')}}"></script> 
+
+   <!-- Include SweetAlert JS -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
+    
+  
   
 </body>
 </html>

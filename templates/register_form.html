@@ -10,7 +10,7 @@
 
     <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
     
-    <script src="{{url_for('static', filename='js/app.js') }}" defer></script>
+    <script src="{{url_for('static', filename='js/main.js') }}" defer></script>
     
     <link href="{{url_for('static', filename='register_form_css.css')}}" rel="stylesheet">
     
@@ -140,7 +140,7 @@
 
 
 {% endblock head %}
-	{%block content%}
+{%block content%}
 
     <form class="" action="" method="post" enctype="multipart/form-data">
         
@@ -172,13 +172,13 @@
                                           
     
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="name" placeholder="Username" name="name" required />
+                                                <input type="text" class="form-control" id="name" placeholder="Username" name="username" required />
                                             </div>
                                                                            <div class="form-group">
                                                 <input type="password" name="password" id="password" class="form-control" placeholder="Password"   required/>
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="password" id="password" class="form-control" placeholder=" Confirm Password"   required/>
+                                                <input type="password" name="confirmpassword" id="password" class="form-control" placeholder=" Confirm Password"   required/>
                                             </div>
     
                                             
@@ -192,9 +192,9 @@
                                     </div>
                                 </div>
                             
-    <!--end of table-->
+   
     
           </div>
         </div>
             </form>
-            {%endblock content%}
+          {% endblock content%}

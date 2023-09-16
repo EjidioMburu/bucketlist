@@ -3,3 +3,5 @@
        2.used basic routes to test them
 
 #FEAT: added route to handle RESTful API
+install passlib for password hashing
+install pip install bcrypt

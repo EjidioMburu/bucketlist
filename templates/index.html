@@ -1,0 +1,13 @@
+<!-- show_bucketlists.html -->
+<ul>
+  {% for bucketlist in bucketlists %}
+  <li>
+      {{ bucketlist.name }}
+      <ul>
+          {% for item in bucketlist.items %}
+          <li>{{ item.name }} - {{ "Done" if item.done else "Not Done" }}</li>
+          {% endfor %}
+      </ul>
+  </li>
+  {% endfor %}
+</ul>

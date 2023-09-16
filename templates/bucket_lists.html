@@ -10,7 +10,7 @@
 
     <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
     
-    <script src="{{url_for('static', filename='js/app.js') }}" defer></script>
+    <script src="{{url_for('static', filename='js/main.js') }}" defer></script>
     
     <link href="{{url_for('static', filename='register_form_css.css')}}" rel="stylesheet">
     
@@ -206,9 +206,22 @@ table tr td button:hover {
 }
 
 
-    </style>
+    
+  .button-container {
+      text-align: center;
+  }
 
-
+  .button-container button {
+      display: inline-block;
+      margin: 0 10px; /* Adjust the margin to create spacing between buttons */
+      padding: 10px 20px; /* Adjust padding to change button size */
+      background-color: #007bff; /* Button background color */
+      color: #fff; /* Button text color */
+      border: none; /* Remove button border */
+      border-radius: 5px; /* Add some border radius for rounded corners */
+      cursor: pointer;
+  }
+</style>
 </head>
 
 
@@ -236,7 +249,7 @@ table tr td button:hover {
          
           <div class="col-md-12 col-md-100 pr-2 pt-1 pl-2 ">
             <div class="container">
-                <button class="create-button">Create</button>
+                <button class="create-button"><a href="http://127.0.0.1:5000/bucketlists/">Create</a></button>
                 <div class="search-bar">
                   <input type="text" placeholder="Search...">
                   <button class="search-button">Search</button>
@@ -255,49 +268,21 @@ table tr td button:hover {
               </div>
               
               <div class="table-container pt-2">
+                {% for item in bucketlist_items %}
+           
+       
+
                 <table class=" table-hover table-bordered bg-light p-2">
         
                     <tr>
-                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
-                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                  <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
+                 
+                  </tr> <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>{{ item.bucketlist_name }}<<<<>>>>{{ item.item_name }}</b></button></a></h2></th>
                   
-                  </tr>
     
-                  <tr>
-                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
-                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                    <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                    
-                    </tr>
-                    <tr>
-                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
-                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                        <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                        
-                        </tr>
-                        <tr>
-                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
-                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                            <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                            
-                            </tr>
-                            <tr>
-                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>bucket list</b></button></a></h2></th>
-                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                                <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" id="btn">bucket list</button></a></h2></td>
-                                
-                                </tr>
+                  {% endfor %}
+                   
+                       
+                           
                            
                                
                         

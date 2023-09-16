@@ -1,0 +1,131 @@
+{% extends "bucket_lists.html"%}
+
+{%block content%}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
+    <div class="col text-center">
+                      </div>
+    <div class="navbar-brand text-light display-2">WELCOME,ejidio
+  </div>
+  
+    <a href="http://127.0.0.1:8000/logout" class=" btn btn-outline-light btn-lg m-2 text-capitalize">logout</a>
+  </nav>
+  
+  <div class=""></div>
+  
+   
+       
+        <div class="col-md-12 col-md-100 p-2 ">
+          <div class="justify-content col-md-100 p-2  ">
+              
+              
+              
+            <form action="{{ url_for('update_bucketlist', id=bucketlist.id) }}" method="POST">
+        
+    
+    
+        <div class="container-fluid register">
+                        <div class="row">
+                            <div class="col-md-3 register-left">
+                                <img src="" alt=""/>
+                                <marquee behavior="" direction=""><h4>I dont want to die young</h></marquee>
+                                
+        
+                            </div>
+                            <div class="col-md-9 register-right">
+                                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                                    <div class="p-2 col-md-100">
+                                        
+              
+                
+                                        <div class="container-login100-form-btn">
+                                                   
+                                            
+                                            <div class="button-container">
+                                                <button>EDIT</button>
+                                    
+                                                
+                                                <button><input type="submit"> UPDATE  </button>
+                                                
+                                                
+                                            </div>  
+                                                    
+                                                
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    <li class="nav-item">
+        
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        
+                                        
+                                      </div> 
+                                        
+                                        <h3 class="register-heading justify-content"><i>Bucket List </i></h3>
+                                        <div class="row register-form">
+                                            <div class="col-md-6">
+        
+        
+                                              
+        
+                                                <div class="form-group">
+                                                    <label for="bucketname">Bucketlist Name:</label>
+                                                    <input type="text" name="name" class="form-control"  value="{{bucketlist.name}}" required/>
+                                                </div>
+                                               
+                                                        
+                                                   
+                                                
+                                                
+        
+                                              
+                                                <!-- <input type="submit" class="btnRegister form-control" id="butsave" name="register"  value="Register"/> -->
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                
+        <!--end of table-->
+        
+              </div>
+            </div>
+           
+              
+
+                
+            </div>
+
+            
+                
+    
+            
+         
+                         
+                <form method="POST" action="{{ url_for('delete_bucketlist', id=bucketlist.id) }}">
+               <div class="button-container" style="margin-right: 270px; ">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="bg-danger "><input type="submit" name="_method" value="DELETE" onclick="return confirm('Are you sure you want to delete this item?')"></button>
+            </div>
+            </form>
+              
+                 
+             
+            
+            
+                
+           
+         
+       
+  
+  
+        </div>
+      </div>
+ 
+
+{% endblock content%}
+
