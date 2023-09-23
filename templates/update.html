@@ -1,7 +1,0 @@
-<form method="POST" action="{{ url_for('update_bucketlist', id=bucketlist.id) }}">
-
-    <input type="hidden" name="_method" value="PUT">
-    <input type="text" name="name" value="{{ bucketlist.name }}" required>
-    <!-- Add other fields if needed -->
-    <button type="submit">Update</button>
-</form>

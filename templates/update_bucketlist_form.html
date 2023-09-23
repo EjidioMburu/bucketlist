@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Update Bucketlist</h1>
+
+<form method="POST">
+    <div>
+        <label for="name">Bucketlist Name:</label>
+        <input type="text" name="name" value="{{ bucketlist.name }}">
+    </div>
+    <button type="submit">Update</button>
+</form>
+
+
+
+{% endblock %}

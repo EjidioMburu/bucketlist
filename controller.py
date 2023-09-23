@@ -68,37 +68,29 @@ session = Session()
 app = Flask(__name__)
 app.secret_key = 'gvhvh54..gv'
 
-# Sample data to store bucket lists and items (replace this with your database or data storage logic).
-bucketlists = [{"id":1,"name":"ejidio","item":[]}]
-items_counter = 1
-
-
-#middleware to handle the _method field and override the HTTP method for DELETE and PUT requests:
-class MethodRewriteMiddleware:
-    def __init__(self, app):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        request = Request(environ)
-        if request.method == 'POST':
-            method = request.form.get('_method', '').upper()
-            if method in ['PUT', 'DELETE']:
-                environ['REQUEST_METHOD'] = method
-        return self.app(environ, start_response)
-
-app.wsgi_app = MethodRewriteMiddleware(app.wsgi_app)
-
-#route to views
-@app.route('/bucketlist/add')
+@app.route('/index')
+def index():
+    return "hello"
+@app.route('/bucketlist/add', methods=['GET'])
 def create_new_bucketlist():
     return render_template("create_bucketlist.html")
+@app.route('/bucketlists/<int:id>/items/', methods=['GET'])
+# route to create new item for particular bucket list
+def create_bucketlist_item(id):
+    session = Session()
+    bucketlist = session.query(BucketList).get(id)
+    session.close()
+    if bucketlist:
+        return render_template('create_bucketlist_item.html', bucketlist=bucketlist)
+    return jsonify({"error": "Bucketlist not found"}), 404
 
-
-# Helper function to find a bucket list by its ID
-def find_bucketlist_by_id(bucketlist_id):
-    return next((bucketlist for bucketlist in bucketlists if bucketlist['id'] == bucketlist_id), None)
-
-
+#route to update and delete a particular item for a particular bucketlist
+@app.route('/bucketlists/<int:id>/items/<int:item_id>',methods=['GET'])
+def update_delete_item(id,item_id):
+    session=Session()
+    bucketlist = session.query(BucketList).get(id)
+    item = session.query(BucketListItem).filter_by(id=item_id).first()
+    return render_template('update_delete_item.html', bucketlist=bucketlist, item=item)
 
 #login a user in
 @app.route('/auth/login')
@@ -173,17 +165,19 @@ def register():
 
     
 #creating a new bucket list
-@app.route('/bucketlists', methods=["POST"])
+@app.route('/bucketlists', methods=["GET","POST"])
 def create_bucketlist():
     
     if request.method == 'POST':
+        
         bucketlist_name = request.form['bucketlist_name']
+        
         item_name = request.form['item_name']
-        done = True if request.form.get('done') else False
+        done = True if request.form.get('done') == 'on' else False
 
         new_bucket_list = BucketList(
             name=bucketlist_name,
-            created_by="1113456",
+            
             items=[
                 BucketListItem(
                     name=item_name,
@@ -196,7 +190,7 @@ def create_bucketlist():
         session.commit()
         # Redirect to the route that lists all created bucket lists
         return redirect(url_for('list_bucketlists'))
-    return render_template('create_bucketlist.html')
+    
     
 
     
@@ -205,23 +199,36 @@ def create_bucketlist():
 # Route to list all created bucket lists
 @app.route('/bucketlists/', methods=['GET'])
 def list_bucketlists():
-    # Logic to fetch and list all bucket lists
     session = Session()
-
-    # Query to retrieve bucketlist names along with their corresponding item names
-    query = session.query(BucketList.name, BucketListItem.name).join(BucketList.items)
-
-    # Fetch the data
-    result = query.all()
-    #convert the result into a list of dictionaries before sending it as a JSON response
-    #bucket_name and item_name acts as keys to the dictionally
-    bucketlist_items = [{"bucketlist_name": row[0], "item_name": row[1]} for row in result]
+    # Logic to fetch and list all bucket lists
+    # Assuming you have retrieved a list of items
     
+    items = session.query(BucketList.name, BucketListItem.name, BucketList.id).join(BucketList.items).all()
 
-     # Render the template and pass the 'bucketlist_items' data as a context variable
-    return render_template('bucket_lists.html', bucketlist_items=bucketlist_items)
+    # Create a list to store unique bucket lists
+    unique_bucket_lists = []
+
+    for item in items:
+        # Check if the bucket list ID has already been processed
+        if item[2] not in [bl['bucketlist_id'] for bl in unique_bucket_lists]:
+            unique_bucket_lists.append({
+                "bucketlist_id": item[2],
+                "bucketlist_name": item[0],
+                "items": []
+            })
     
+            # Find the corresponding bucket list in unique_bucket_lists
+            bucket_list = next(bl for bl in unique_bucket_lists if bl['bucketlist_id'] == item[2])
+        
+            # Add item details to the bucket list
+            bucket_list["items"].append({
+            "item_name": item[1],
+            })
+
+    # Render the template and pass the 'unique_bucket_lists' data as a context variable
+    return render_template('bucket_lists.html', bucketlist_items=unique_bucket_lists)
     session.close()
+    
 
 
 @app.route('/bucketlists/<int:id>', methods=['GET'])
@@ -232,19 +239,31 @@ def get_bucketlist(id):
     if bucketlist:
         return render_template('single_update_bucket.html', bucketlist=bucketlist)
     return jsonify({"error": "Bucketlist not found"}), 404
+    
 
 #editing/update single/specific bucketlist 
-@app.route('/bucketlists/<int:id>/update', methods=['POST'])
+@app.route('/bucketlists/<int:id>', methods=['PUT'])
 def update_bucketlist(id):
     session = Session()
     bucketlist = session.query(BucketList).get(id)
-    if bucketlist:
-        bucketlist.name = request.form['name']
-        session.commit()
+    if not bucketlist:
         session.close()
-        return redirect('/bucketlists/')
-    session.close()
-    return 'Bucketlist not found', 404
+        return jsonify({"error": "Bucketlist not found"}), 404
+
+    if request.method == 'PUT':
+        bucketlist.name = request.form.get('name', bucketlist.name)
+
+        try:
+            session.commit()
+            session.close()  
+            return redirect(url_for('get_bucketlist', id=id))
+        except Exception as e:
+            session.rollback()
+            session.close()
+            return jsonify({"error": str(e)}), 500
+    
+    return render_template('update_bucketlist_form.html', bucketlist=bucketlist)
+
 @app.route('/bucketlists/<int:id>', methods=['DELETE'])
 def delete_bucketlist(id):
     session = Session()
@@ -254,63 +273,78 @@ def delete_bucketlist(id):
        session.commit()
        return redirect('/bucketlists/')
     return 'Bucketlist not found', 404
-
-
 #create a new item in bucket list
-@app.route('/bucketlists/<int:id>/items/', methods=['PUT'])
+@app.route('/bucketlists/<int:id>/items/', methods=['POST'])
 def create_item(id):
-    bucketlist = find_bucketlist_by_id(id)
-    if not bucketlist:
-        return jsonify({"message": "Bucket list not found"}), 404
-
-    data = request.get_json()
-    item_name = data.get('name')
-    if not item_name:
-        return jsonify({"message": "Item name is required"}), 400
-
-    global items_counter
-    new_item = {
-        "id": items_counter,
-        "name": item_name
-    }
-    items_counter += 1
-    bucketlist['items'].append(new_item)
-
-    return jsonify({"message": "Item created successfully", "item": new_item}), 201
-
-#update a bucket list item 
+    # Assuming you receive the item details from the request, you can create a new item like this:
+    item_name = request.form['item_name']  # Assuming JSON request
+    done = done = True if request.form.get('done') == 'on' else False
+    
+    # Find the corresponding bucket list
+    bucket_list = session.query(BucketList).get(id)
+    
+    if bucket_list:
+        # Create a new item
+        new_item = BucketListItem(
+            name=item_name,
+            done=done,
+            bucket_list=bucket_list
+        )
+        
+        # Add the new item to the session and commit
+        session.add(new_item)
+        session.commit()
+        
+        return jsonify({"message": "Item created successfully."}), 201
+    else:
+        return jsonify({"error": "Bucket List not found."}), 404
+# #update a bucket list item 
 @app.route('/bucketlists/<int:id>/items/<int:item_id>', methods=['PUT'])
 def update_item(id, item_id):
-    bucketlist = find_bucketlist_by_id(id)
+    bucketlist = session.query(BucketList).get(id)
+    item = session.query(BucketListItem).filter_by(id=item_id).first()
     if not bucketlist:
-        return jsonify({"message": "Bucket list not found"}), 404
+        session.close()
+        return jsonify({"error": "Bucketlist not found"}), 404
 
-    item = next((i for i in bucketlist['items'] if i['id'] == item_id), None)
-    if not item:
-        return jsonify({"message": "Item not found"}), 404
+    if request.method == 'PUT':
+        item.name = request.form.get('item_name', item.name)
 
-    data = request.get_json()
-    item_name = data.get('name')
-    if not item_name:
-        return jsonify({"message": "Item name is required"}), 400
-
-    item['name'] = item_name
-    return jsonify({"message": "Item updated successfully", "item": item}), 200
+        try:
+            session.commit()
+            flash('Item updated successfully!') 
+            return redirect(url_for('update_delete_item.html', bucketlist=bucketlist, item=item))
+            session.close() 
+        except Exception as e:
+            session.rollback()
+            session.close()
+            return jsonify({"error": str(e)}), 500
+    
+    return render_template('update_bucketlist_form.html', bucketlist=bucketlist)
 
 #delete an item in bucket item
 
-@app.route('/bucketlists/<int:id>/items/<int:item_id>', methods=['DELETE'])
+@app.route('/bucketlists/<int:id>/items/<int:item_id>', methods=['DELETE', 'POST'])
 def delete_item(id, item_id):
-    bucketlist = find_bucketlist_by_id(id)
-    if not bucketlist:
-        return jsonify({"message": "Bucket list not found"}), 404
+    if request.form.get('_method') == 'DELETE':
+        item_id=str(item_id)
+        item = session.query(BucketListItem).filter_by(id=item_id).first()
+        if not item:
+            return jsonify({"error": "Item not found"}), 404
 
-    item = next((i for i in bucketlist['items'] if i['id'] == item_id), None)
-    if not item:
-        return jsonify({"message": "Item not found"}), 404
+        try:
+            session.delete(item)
+            session.commit()
+            flash('Item deleted successfully', 'success')
+            session.close()
+            return redirect(url_for('get_bucketlist', id=id))
+        except Exception as e:
+            session.rollback()
+            session.close()
+            return jsonify({"error": str(e)}), 500
+    else:
+        return jsonify({'error': 'Wrong method'}), 405
 
-    bucketlist['items'] = [i for i in bucketlist['items'] if i['id'] != item_id]
-    return jsonify({"message": "Item deleted successfully"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

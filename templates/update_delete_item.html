@@ -20,9 +20,21 @@
               
               
               
-            <form action="{{ url_for('create_bucketlist') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url_for('update_item', id=bucketlist.id,item_id=item.id) }}" method="POST" enctype="multipart/form-data">
         
-    
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              <div class="flashes" style="text-align: center; padding-right: 350px;">
+
+                {% for message in messages%}
+                <p> <font color="red">{{ message}}</font></p>
+
+
+                
+                {% endfor %}
+                </div>
+              {% endif %}
+              {% endwith %}
     
         <div class="container-fluid register">
                         <div class="row">
@@ -38,10 +50,14 @@
                                         
               
                 
-                                        <div class="container-login100-form-btn">
-                                            <input type="submit" value="register" class="login100-form-btn bg-primary" name="Register"/>
-                                               
-                                        </div>
+                                      <div class="button-container">
+                                        <button  type="button" style="color: red;" onclick="reloadPage()">DISCARD</button>
+                                        <input type="hidden" name="_method" value="PUT">
+                                        
+                            
+                                        
+                                        <button><input type="submit" value="Update Item">   </button>
+                                        
                                         
                                         
                                     </div>
@@ -65,18 +81,14 @@
         
                                                 <div class="form-group">
                                                     <label for="username">Bucketlist Name:</label>
-                                                    <input type="text" class="form-control" id="name" placeholder="Bucketlist name" name="bucketlist_name" required />
+                                                    <input type="text" class="form-control" id="name" placeholder="Bucketlist name" name="bucketlist_name" value="{{bucketlist.name}}" disabled/>
                                                 </div>
                                                         
-                                                    <label for="password">Item Name:</label>
-                                                    <input type="text" name="item_name" id="password" class="form-control" placeholder=" Item name"   required/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="done">Done:</label>
-                                                    <input type="checkbox" class="form-control" id="name" placeholder="Done" name="Done" required />
-                                                    
+                                                    <label for="password">New Item :</label>
+                                                    <input type="text" name="item_name" id="password" class="form-control" placeholder=" Item name"  value="{{item.name}}"  required/>
                                                 </div>
                                                 
+                                               
                                                 
                                                 
                                               
@@ -88,23 +100,68 @@
                                 
         <!--end of table-->
         
-              </div>
-            </div>
-            <div class="form-group p-2">
-                <div style="text-align: center;">
-                    <button class="create-button bg-danger ">Discard</button>
-                    
-                </div>
-
-
-                
-            </div>
-                </form>
-    
-
-  
-        </div>
       </div>
+    </div>
+   
+      
+
+        
+    </div>
+
+  </div>
+</div>
+</form>
+        
+
+    
+ 
+                 
+        
+       <div class="button-container" style="margin-right: 270px; ">
+        
+        <form method="POST" action="{{ url_for('delete_item', id=bucketlist.id, item_id=item.id) }}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button style="background-color: red;" type="submit">Delete Item</button>
+      </form>
+      
+      </div>
+   
+   
+         
+     
+    
+    
+        
+   
  
 
+
+
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+event.preventDefault();
+const form = event.target;
+const formData = new FormData(form);
+const url = form.action;
+const xhr = new XMLHttpRequest();
+xhr.open('PUT', url);
+xhr.onload = function() {
+if (xhr.status!==404) {
+    location.reload();
+} else {
+    alert('Error updating bucketlist');
+}
+};
+xhr.send(formData);
+});
+function reloadPage() {
+location.reload();
+
+};
+
+
+</script>
+
 {% endblock content%}
+

@@ -5,3 +5,4 @@
 #FEAT: added route to handle RESTful API
 install passlib for password hashing
 install pip install bcrypt
+removed the middleware

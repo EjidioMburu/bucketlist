@@ -20,8 +20,20 @@
               
               
               
-            <form action="{{ url_for('update_bucketlist', id=bucketlist.id) }}" method="POST">
-        
+            <form action="{{ url_for('update_bucketlist', id=bucketlist.id) }}" method="PUT">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="flashes" style="text-align: center; padding-right: 350px;">
+  
+                  {% for message in messages%}
+                  <p> <font color="red">{{ message}}</font></p>
+  
+  
+                  
+                  {% endfor %}
+                  </div>
+                {% endif %}
+                {% endwith %}
     
     
         <div class="container-fluid register">
@@ -42,10 +54,11 @@
                                                    
                                             
                                             <div class="button-container">
-                                                <button>EDIT</button>
+                                                <button  type="button"  onclick="reloadPage()">DISCARD</button>
+                                                
                                     
                                                 
-                                                <button><input type="submit"> UPDATE  </button>
+                                                <button><input type="submit" value="UPDATE">   </button>
                                                 
                                                 
                                             </div>  
@@ -83,8 +96,7 @@
                                                 
                                                 
         
-                                              
-                                                <!-- <input type="submit" class="btnRegister form-control" id="butsave" name="register"  value="Register"/> -->
+                                             
                                             </div>
                                         </form>
                                         </div>
@@ -125,7 +137,31 @@
   
         </div>
       </div>
- 
+ <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const url = form.action;
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.onload = function() {
+        if (xhr.status==404) {
+            console.log(xhr.status)
+            alert('Bucketlist updated successfully!');
+        } else {
+            alert('Error updating bucketlist');
+        }
+    };
+    xhr.send(formData);
+});
+function reloadPage() {
+    location.reload();
+        
+};
+
+
+ </script>
 
 {% endblock content%}
 
