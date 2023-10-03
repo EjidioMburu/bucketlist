@@ -237,7 +237,7 @@ table tr td button:hover {
     <nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
       <div class="col text-center">
                         </div>
-      <div class="navbar-brand text-light display-2">WELCOME,ejidio
+      <div class="navbar-brand text-light display-2">WELCOME,{{uname}}
     </div>
     
       <a href="http://127.0.0.1:8000/logout" class=" btn btn-outline-light btn-lg m-2 text-capitalize">logout</a>
@@ -253,6 +253,15 @@ table tr td button:hover {
                 <div class="search-bar">
                   <input type="text" placeholder="Search...">
                   <button class="search-button">Search</button>
+                  {% with messages = get_flashed_messages() %}
+					{% if messages %}
+					  <div class=flashes>
+					  {% for message in messages%}
+						<p class="create-button bg-light"> <font color="red"><i>{{ message}}</i></font></p>
+					  {% endfor %}
+					  </div>
+					{% endif %}
+				  {% endwith %}
                 </div>
                 
                 <div class="pagination">
@@ -276,7 +285,7 @@ table tr td button:hover {
         
                     <tr>
                  
-                  </tr> <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action text-danger" style="background-color: rgb(127, 255, 238)"><b>{{ item.bucketlist_name }}<<<<>>>></b></button></a></h2></th>
+                  </tr> <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="#"> <button type="button" class="list-group-item list-group-item-action" style="background-color: rgb(127, 255, 238)"><b>[Id:{{item.bucketlist_id}}]   {{ item.bucketlist_name }}</b></button></a></h2></th>
                   
     
                   {% endfor %}
@@ -300,30 +309,49 @@ table tr td button:hover {
         
           </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const searchButton = document.querySelector('.search-button');
+              const searchInput = document.getElementById('searchInput');
+          
+              searchButton.addEventListener('click', function() {
+                  performSearch(searchInput.value);
+              });
+          
+              searchInput.addEventListener('keyup', function(event) {
+                  if (event.key === 'Enter') {
+                      performSearch(searchInput.value);
+                  }
+              });
+          });
+          
+          function performSearch(query) {
+              const limit = 20; // Adjust the limit as needed
+              const apiUrl = `http://localhost:5000/bucketlists/?q=${query}`;
+          
+              fetch(apiUrl)
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                      }
+                      return response.json(); // Convert the response to JSON
+                  })
+                  .then(data => {
+                      /// Handle the search results
+                      const resultsContainer = document.getElementById('results');
+                      resultsContainer.innerHTML = ''; // Clear previous results
+          
+                      data.forEach(item => {
+                          const resultItem = document.createElement('div');
+                          resultItem.textContent = item.bucketlist_name;
+                          resultsContainer.appendChild(resultItem);
+                      });
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+          }
+          
+          </script>
         {%endblock content%}
-
-
-
-
-
-
-
-      
-            
-        
-       
-        
-
-        
-
-      
-
-
-
-
-
-
-    
-    
-  
-    

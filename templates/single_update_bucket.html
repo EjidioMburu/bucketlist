@@ -26,7 +26,7 @@
                 <div class="flashes" style="text-align: center; padding-right: 350px;">
   
                   {% for message in messages%}
-                  <p> <font color="red">{{ message}}</font></p>
+                  <p> <font color="green">{{ message}}</font></p>
   
   
                   
@@ -58,7 +58,7 @@
                                                 
                                     
                                                 
-                                                <button><input type="submit" value="UPDATE">   </button>
+                                                <button><input type="submit" value="UPDATE" onclick="return confirm('Are you sure you want to update this item?')">   </button>
                                                 
                                                 
                                             </div>  
@@ -87,7 +87,7 @@
                                               
         
                                                 <div class="form-group">
-                                                    <label for="bucketname">Bucketlist Name:</label>
+                                                    <label for="bucketlist name">Bucketlist Name:</label>
                                                     <input type="text" name="name" class="form-control"  value="{{bucketlist.name}}" required/>
                                                 </div>
                                                
@@ -105,38 +105,15 @@
         <!--end of table-->
         
               </div>
-            </div>
-           
-              
-
-                
-            </div>
-
+            </div>   
             
-                
-    
-            
-         
-                         
-                <form method="POST" action="{{ url_for('delete_bucketlist', id=bucketlist.id) }}">
-               <div class="button-container" style="margin-right: 270px; ">
-                <input type="hidden" name="_method" value="DELETE">
-                <button class="bg-danger "><input type="submit" name="_method" value="DELETE" onclick="return confirm('Are you sure you want to delete this item?')"></button>
-            </div>
+            <form id="deleteForm" method="POST" action="{{ url_for('delete_bucketlist', id=bucketlist.id) }}">
+                <div class="button-container" style="margin-right: 270px; ">
+                    <button class="bg-danger" type="button" onclick="confirmDelete()">DELETE</button>
+                </div>
             </form>
-              
-                 
-             
             
-            
-                
-           
-         
-       
-  
-  
-        </div>
-      </div>
+        
  <script>
     document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -146,15 +123,22 @@
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', url);
     xhr.onload = function() {
-        if (xhr.status==404) {
-            console.log(xhr.status)
-            alert('Bucketlist updated successfully!');
-        } else {
+        if (xhr.status!==404) {
+            location.reload();
+       } else {
             alert('Error updating bucketlist');
         }
     };
     xhr.send(formData);
 });
+
+function confirmDelete() {
+        if (confirm('Are you sure you want to delete this item?')) {
+            var form = document.getElementById('deleteForm');
+            form.submit();
+        }
+    }
+
 function reloadPage() {
     location.reload();
         
