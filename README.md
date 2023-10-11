@@ -31,7 +31,7 @@
     => FUCTIONALITIES
         Login->with http://127.0.0.1:5000/auth/login you are able to login using correct credentials.
         Registrations-> with http://127.0.0.1:5000/auth/register you are able to register as a new user.
-        Creating a new bucketlist->http://127.0.0.1:5000/bucketlist/add enables to create a new bucketlist
+        Creating a new bucketlist->http://127.0.0.1:5000/bucketlist/ enables to create a new bucketlist
         Listing all bucketlist->http://127.0.0.1:5000/bucketlists.
         Get a single bucketlist->http://127.0.0.1:5000/bucketlists/<int:id> it gives a specific bucketlist by providing the target id number on the url.
         Update this bucketlist->http://127.0.0.1:5000/bucketlists/<int:id> by inputing the target bucketlist id it updates.
@@ -45,10 +45,10 @@
 
 # 5.BUILD STATUS
     On the "all bucketlist page (http://127.0.0.1:5000/bucketlists) there was a bug on how to search using the provided user interface (html search bar)
-
-# 6.FUTURE DEVELOPMENT
-  fix search bar bug
-  incorporate security
+# 6.SECURITY FEATURE
+    Have ensured the routes are protected using security algorithm
+# 7.FUTURE DEVELOPMENT
+  fix 'search bar' bug
   intergrate reactjs and improve frontend
   host the project 
   
