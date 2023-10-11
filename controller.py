@@ -218,6 +218,7 @@ def create_bucketlist(username):
 @app.route('/bucketlists',endpoint='list_bucketlists', methods=['GET','POST'])
 @authenticate
 def list_bucketlists(username):
+    
     token = username 
     db_session = Session()
     # Get the 'limit' parameter from the request, or use a default value of 20
@@ -225,7 +226,19 @@ def list_bucketlists(username):
     # Ensure that 'limit' is within the specified range (1 to 100)
     limit = max(1, min(limit, 100))
      # Get the search query from the 'q' parameter
-    search_query = request.args.get('q', '')
+    # Retrieve data from the form
+    search_query_form = request.form.get('search')
+
+    # Retrieve data from the query parameters (URL)
+    search_query_url = request.args.get('q', '')
+
+    # Decide which value to use
+    if search_query_form:
+        search_query = search_query_form
+    elif search_query_url:
+        search_query = search_query_url
+    else:
+        search_query = ''
     # retrieve a list of items
     items = db_session.query(BucketList.name, BucketListItem.name, BucketList.id).join(BucketList.items).filter(BucketList.name.ilike(f'%{search_query}%')).limit(limit).all()
     # Create a list to store unique bucket lists

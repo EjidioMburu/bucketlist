@@ -253,8 +253,10 @@ table tr td button:hover {
               
                 <button class="create-button">    <a href="{{ url_for('create_bucketlist') }}">Create</a></button>
                 <div class="search-bar">
-                  <input type="text" placeholder="Search...">
-                  <button class="search-button">Search</button>
+                  <form action="{{url_for('list_bucketlists')}}" method="post">
+                  <input type="text" placeholder="Search..." name="search">
+                  <button type="submit" class="search-button">Search</button>
+                </form>
                   {% with messages = get_flashed_messages() %}
 					{% if messages %}
 					  <div class=flashes>
@@ -312,48 +314,5 @@ table tr td button:hover {
           </div>
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              const searchButton = document.querySelector('.search-button');
-              const searchInput = document.getElementById('searchInput');
-          
-              searchButton.addEventListener('click', function() {
-                  performSearch(searchInput.value);
-              });
-          
-              searchInput.addEventListener('keyup', function(event) {
-                  if (event.key === 'Enter') {
-                      performSearch(searchInput.value);
-                  }
-              });
-          });
-          
-          function performSearch(query) {
-              const limit = 20; // Adjust the limit as needed
-              const apiUrl = `http://localhost:5000/bucketlists/?q=${query}`;
-          
-              fetch(apiUrl)
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error('Network response was not ok');
-                      }
-                      return response.json(); // Convert the response to JSON
-                  })
-                  .then(data => {
-                      /// Handle the search results
-                      const resultsContainer = document.getElementById('results');
-                      resultsContainer.innerHTML = ''; // Clear previous results
-          
-                      data.forEach(item => {
-                          const resultItem = document.createElement('div');
-                          resultItem.textContent = item.bucketlist_name;
-                          resultsContainer.appendChild(resultItem);
-                      });
-                  })
-                  .catch(error => {
-                      console.error('Error:', error);
-                  });
-          }
-          
-          </script>
+        
         {%endblock content%}
