@@ -108,7 +108,10 @@ def authenticate(func):
 
 
 
-
+#index
+@app.route('/index')
+def index():
+    return render_template("index.html")
 
 
 #login a user in

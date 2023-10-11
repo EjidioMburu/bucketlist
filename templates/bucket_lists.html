@@ -221,6 +221,37 @@ table tr td button:hover {
       border-radius: 5px; /* Add some border radius for rounded corners */
       cursor: pointer;
   }
+
+  
+  .container_div {
+        width: 150px; /* Adjust width */
+        height: 96px;
+        background:aqua;
+        margin: 10px; /* Add some space between the containers */
+    }
+
+    .container_wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .container_item {
+        flex: 1 1 20%; /* Set flex-basis to 20% for five containers in a row */
+        margin: 5px; /* Add some space between the items */
+    } 
+    #my-but {
+        
+        
+        
+        cursor: pointer;
+        transition: background-color 0.3s; /* Add a smooth transition */
+    }
+
+    #my-but:hover {
+        background-color:#0080FF !important; /* New background color on hover */
+    }
+    
+    </style>
 </style>
 </head>
 
@@ -281,20 +312,32 @@ table tr td button:hover {
               </div>
               
               <div class="table-container pt-2">
-                {% for item in bucketlist_items %}
-           
-       
+                <div class="container_wrapper">
 
-                <table class=" table-hover table-bordered bg-light p-2">
+                {% for item in bucketlist_items %}
+                <a href="{{ url_for('get_bucketlist',id=item.bucketlist_id ) }}"> <button type="button" class="list-group-item list-group-item-action " id="my-but" style="background-color: rgb(238, 249, 248)">
+        <div class="container_item">
+            <div class="container_div">
+                <div class="ic">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="43" height="18" padding-left="50" viewBox="0 0 43 18" fill="none">
+                        <path d="M42.4531 8.71428C42.4531 13.4031 33.0663 17.2041 21.487 17.2041C9.90769 17.2041 0.520828 13.4031 0.520828 8.71428C0.520828 4.0255 9.90769 0.224487 21.487 0.224487C33.0663 0.224487 42.4531 4.0255 42.4531 8.71428Z" fill="#7DDB87"/>
+                    </svg>
+                </div>
+               <b> <p>[Id:{{item.bucketlist_id}}]   {{ item.bucketlist_name }}</p><br>
+                <i><p>No of items:</p></i></b>
+            </div>
+        </div>
+      </button></a>
+                <!-- <table class=" table-hover table-bordered bg-light p-2">
         
                     <tr>
                  
                   </tr> <td class="bg-primary te" colspan="1" style="text-align: center;"><h2><a href="{{ url_for('get_bucketlist',id=item.bucketlist_id ) }}"> <button type="button" class="list-group-item list-group-item-action" style="background-color: rgb(127, 255, 238)"><b>[Id:{{item.bucketlist_id}}]   {{ item.bucketlist_name }}</b></button></a></h2></th>
-                  
+                   -->
     
                   {% endfor %}
                    
-                       
+                </div>
                            
                            
                                
