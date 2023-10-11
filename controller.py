@@ -124,9 +124,10 @@ def login_route():
     db_session = Session()
     # Query for the user
     user = db_session.query(User).filter(User.username == username).first()
-    # Convert user data to a dictionary
-    user_dict = user.to_dict()
-    if user_dict is not None:
+    
+    if user is not None:
+        # Convert user data to a dictionary
+        user_dict = user.to_dict()
         token = generate_token(username)
         session['token']=token
         password_hash = user_dict["password_hash"]
@@ -139,7 +140,10 @@ def login_route():
             db_session.close()
             flash("wrong credentials")
             return redirect(url_for('login_page'))  # Redirect to a login page with an error message.
-        
+    else: 
+        db_session.close()
+        flash("wrong credentials")
+        return redirect(url_for('login_page'))  # Redirect to a login page with an error message.   
 
 #register a new user
 @app.route('/auth/register', methods=['GET', 'POST'])
