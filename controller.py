@@ -407,6 +407,13 @@ def delete_item(id, item_id,username):
             return jsonify({"error": str(e)}), 500
     else:
         return jsonify({'error': 'Unable to delete'}), 405
+    
+@app.route('/logout', methods=['GET'])
+def logout():
+    if 'token' in session:
+        session.pop('token', None)  # Remove the token from the session
+    return redirect(url_for('login_page'))  # Redirect to the login page after logout
+
 
 
 if __name__ == '__main__':
