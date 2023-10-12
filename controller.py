@@ -412,6 +412,7 @@ def delete_item(id, item_id,username):
 def logout():
     if 'token' in session:
         session.pop('token', None)  # Remove the token from the session
+        flash("(._.) Logged out!!!")
     return redirect(url_for('login_page'))  # Redirect to the login page after logout
 
 
