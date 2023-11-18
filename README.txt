@@ -51,7 +51,7 @@
 # 6.SECURITY FEATURE
     Have ensured the routes are protected using security algorithm
 # 7.FUTURE DEVELOPMENT
-  fix 'search bar' bug
+  
   intergrate reactjs and improve frontend
   host the project 
   
